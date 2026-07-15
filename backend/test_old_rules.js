@@ -1,0 +1,11 @@
+const { Client } = require('pg'); 
+const client = new Client('postgresql://postgres:postgres@localhost:5432/postgres'); 
+client.connect().then(() => client.query(`
+SELECT SUM(
+    CASE WHEN pd.status = 'Concluída' THEN COALESCE(r.receita_vivo, 0) + COALESCE(r.receita_fibrasil, 0) ELSE 0 END
+) as total
+FROM importador.zeus_consolidado pd 
+LEFT JOIN importador.macro_atividades ma ON UPPER(TRIM(pd.tipo_de_atividade)) = UPPER(TRIM(ma.atividade_zeus)) 
+LEFT JOIN importador.regras_receita r ON UPPER(TRIM(r.chave)) = UPPER(TRIM(ma.macro_atividade) || CASE WHEN UPPER(pd.cidade) IN ('CABEDELO', 'GARANHUNS', 'MOSSORO', 'PARNAMIRIM', 'PATOS') THEN 'FIBRASIL' ELSE 'VIVO' END) 
+WHERE EXTRACT(MONTH FROM CASE WHEN EXTRACT(DAY FROM pd.data_agendada_para_execu__o::date) >= 21 THEN pd.data_agendada_para_execu__o::date + interval '1 month' ELSE pd.data_agendada_para_execu__o::date END) = 7
+`)).then(res => { console.log(res.rows); client.end(); }).catch(e => console.error(e));

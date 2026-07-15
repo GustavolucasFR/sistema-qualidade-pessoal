@@ -1,0 +1,32 @@
+{
+    "01/2026": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 97.03,
+        "outlier_12h": 0.0,
+        "tmr": 77.39,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 12.26
+    },
+    "02/2026": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 97.63,
+        "outlier_12h": 0.0,
+        "tmr": 73.0,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 12.39
+    },
+    "03/2026": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 97.46,
+        "outlier_12h": 0.0,
+        "tmr": 77.12,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 13.45
+    }
+}

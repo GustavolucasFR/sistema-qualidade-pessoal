@@ -1,0 +1,7 @@
+ID_Cliente;Tecnico_Responsavel;Motivo_Penalizacao;Dias_Apurados
+2;Tecnico_C;Reincidência <= 30 dias;9.0
+1;Tecnico_A;IFI <= 15 dias;17.0
+1;Tecnico_B;SLA Reparo > 8h;9.0
+2;Tecnico_C;SLA Reparo > 8h;9.0
+2;Tecnico_C;SLA Reparo > 8h;9.0
+4;Tecnico_E;SLA Reparo > 8h;9.0

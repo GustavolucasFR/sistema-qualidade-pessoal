@@ -1,0 +1,18 @@
+{
+  "JOAO PESSOA": {
+    "eficiencia": 100.0,
+    "produtividade": 0
+  },
+  "CARUARU": {
+    "eficiencia": 150.0,
+    "produtividade": 0
+  },
+  "RECIFE": {
+    "eficiencia": 100.0,
+    "produtividade": 0
+  },
+  "NATAL": {
+    "eficiencia": 100.0,
+    "produtividade": 0
+  }
+}

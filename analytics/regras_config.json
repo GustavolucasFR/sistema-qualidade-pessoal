@@ -1,0 +1,73 @@
+{
+  "mapeamento_colunas": {
+    "ordem": "Número da Ordem de Serviço",
+    "cliente": "Código de Cliente",
+    "tecnico": "Recurso",
+    "atividade": "Tipo de Atividade",
+    "data_abertura": "Início Previsto",
+    "data_encerramento": "Término da Atividade",
+    "status": "Status",
+    "estado": "Estado",
+    "cidade": "Cidade"
+  },
+  "telefonica_anexo09": {
+    "colunas_obrigatorias": [
+      "Código de Cliente",
+      "Tipo de Atividade",
+      "Início Previsto",
+      "Término da Atividade",
+      "Recurso"
+    ],
+    "regras": [
+      {
+        "coluna": "TIPO_ATIVIDADE",
+        "tipo": "valores_permitidos",
+        "valores": [
+          "Instalacao",
+          "Reparo"
+        ]
+      }
+    ],
+    "metas": {
+      "reincidencia_dias_limite": 30,
+      "ifi_dias_limite": 15,
+      "sla_reparo_horas_uteis": 8
+    },
+    "metas_globais": {
+      "base_clientes_ativa": 50000,
+      "reparo_4h": { "saudavel_min": 92 },
+      "outlier_12h": { "ideal_max": 3, "critico_min": 8 },
+      "tmr": { "ideal_max": 180, "critico_min": 240 },
+      "efetividade_altas": { "meta_min": 90 },
+      "minima_agenda": { "meta_min": 90 },
+      "bd_planta": { "ideal_max": 2, "critico_min": 4 }
+    }
+  },
+  "telefonica_anexo07_financeiro": {
+    "mapeamento_colunas": {
+      "inspecao": "ID_Inspecao",
+      "tecnico": "NOME_TECNICO",
+      "infracao": "INFRACAO",
+      "data": "DATA_AUDITORIA",
+      "estado": "UF",
+      "cidade": "CIDADE"
+    },
+    "colunas_obrigatorias": [
+      "ID_Inspecao",
+      "Tecnico_Responsavel",
+      "Tipo_Infracao",
+      "Data_Auditoria"
+    ],
+    "tabela_multas_rnc": {
+      "DANO_PATRIMONIO_CLIENTE": 1144.00,
+      "FALTA_VISTORIA": 715.00,
+      "DESCONEXAO_INDEVIDA": 715.00,
+      "NAO_ATENDIMENTO_CONCESSIONARIA": 286.00,
+      "FALTA_INFORMACOES_SISTEMA": 114.00,
+      "FALTA_EPI": 357.29,
+      "FALTA_EPC": 214.36,
+      "FALTA_INSTRUMENTOS": 214.36,
+      "BAIXA_RETROAGIDA": 106.85
+    }
+  }
+}

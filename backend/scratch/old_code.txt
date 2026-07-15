@@ -1,0 +1,14 @@
+Created At: 2026-07-09T18:35:11Z
+Completed At: 2026-07-09T18:35:12Z
+
+				The command failed with exit code: 1
+				Output:
+				grep : O termo 'grep' n�o � reconhecido como nome de cmdlet, fun�o, arquivo de script ou programa oper�vel. Verifique 
+a grafia do nome ou, se um caminho tiver sido inclu�do, veja se o caminho est� correto e tente novamente.
+No linha:1 caractere:1
++ grep -A 50 "exports.getProducaoBa = " c:\Users\TECNOMULTI\.gemini\ant ...
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (grep:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+

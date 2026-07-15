@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Qualidade | Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header glass-panel">
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h1>Sistema de Qualidade <span class="badge">MVP</span></h1>
+            </div>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff" alt="User Avatar" class="avatar">
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Left Column: Upload -->
+            <section class="upload-section glass-panel">
+                <h2><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Planilha</h2>
+                <p class="subtitle">Faça o upload do arquivo .xlsx para iniciar a auditoria das regras.</p>
+                
+                <div class="upload-dropzone" id="dropzone">
+                    <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" hidden>
+                    <i class="fa-solid fa-file-excel drop-icon"></i>
+                    <h3>Arraste e solte seu arquivo aqui</h3>
+                    <p>ou clique para procurar</p>
+                </div>
+
+                <div class="upload-controls">
+                    <select id="tipoPlanilha" class="custom-select">
+                        <option value="antigravity">Regras: Antigravity (Padrão)</option>
+                    </select>
+                    <button class="btn btn-primary" id="btnAnalisar" disabled>
+                        <i class="fa-solid fa-play"></i> Iniciar Análise
+                    </button>
+                </div>
+
+                <!-- Progresso / Loading -->
+                <div class="processing-state hidden" id="processingState">
+                    <div class="spinner"></div>
+                    <p>Processando via Python Pandas...</p>
+                </div>
+            </section>
+
+            <!-- Right Column: Results & KPIs -->
+            <section class="results-section">
+                <!-- KPIs -->
+                <div class="kpi-grid">
+                    <div class="kpi-card glass-panel">
+                        <div class="kpi-icon blue"><i class="fa-solid fa-list-ol"></i></div>
+                        <div class="kpi-info">
+                            <span class="kpi-title">Linhas Analisadas</span>
+                            <span class="kpi-value" id="kpiTotal">-</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass-panel">
+                        <div class="kpi-icon green"><i class="fa-solid fa-check-circle"></i></div>
+                        <div class="kpi-info">
+                            <span class="kpi-title">Aprovadas</span>
+                            <span class="kpi-value" id="kpiSuccess">-</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass-panel">
+                        <div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="kpi-info">
+                            <span class="kpi-title">Com Erros</span>
+                            <span class="kpi-value" id="kpiError">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-container glass-panel">
+                    <div class="table-header">
+                        <h2><i class="fa-solid fa-table-list"></i> Detalhe das Inconsistências</h2>
+                        <button class="btn btn-secondary btn-sm" id="btnDownload" disabled>
+                            <i class="fa-solid fa-download"></i> Baixar CSV Limpo
+                        </button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="resultsTable">
+                            <thead>
+                                <tr>
+                                    <th>Linha Excel</th>
+                                    <th>Erros Encontrados</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <tr class="empty-state">
+                                    <td colspan="3">
+                                        <i class="fa-solid fa-inbox"></i>
+                                        <p>Nenhuma análise realizada ainda.</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+◇ injected env (5) from .env // tip: ⌘ override existing { override: true }
+◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+🚀 API do Sistema de Qualidade rodando na porta 3001 (Protegida com JWT)
+📡 Rota de Login: http://localhost:3001/api/auth/login
+Error fetching TDNA: error: coluna mt.tecnicos não existe
+    at C:\Users\TECNOMULTI\sistema-qualidade\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Promise.all (index 1)
+    at async getTDNA (C:\Users\TECNOMULTI\sistema-qualidade\backend\src\controllers\produtividadeKpiController.js:103:43) {
+  length: 169,
+  severity: 'ERRO',
+  code: '42703',
+  detail: undefined,
+  hint: 'Talvez você queira fazer referência à coluna "mt.t_cnico".',
+  position: '242',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3838',
+  routine: 'errorMissingColumn'
+}
+Error fetching TDNA: error: coluna mt.tecnicos não existe
+    at C:\Users\TECNOMULTI\sistema-qualidade\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Promise.all (index 1)
+    at async getTDNA (C:\Users\TECNOMULTI\sistema-qualidade\backend\src\controllers\produtividadeKpiController.js:103:43) {
+  length: 169,
+  severity: 'ERRO',
+  code: '42703',
+  detail: undefined,
+  hint: 'Talvez você queira fazer referência à coluna "mt.t_cnico".',
+  position: '242',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3838',
+  routine: 'errorMissingColumn'
+}

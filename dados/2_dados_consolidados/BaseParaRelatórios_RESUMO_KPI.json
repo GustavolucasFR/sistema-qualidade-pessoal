@@ -1,0 +1,82 @@
+{
+    "01/2025": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 96.45,
+        "outlier_12h": 0.01,
+        "tmr": 81.33,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 15.83
+    },
+    "02/2025": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 96.42,
+        "outlier_12h": 0.04,
+        "tmr": 77.85,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 16.16
+    },
+    "03/2025": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 96.19,
+        "outlier_12h": 0.01,
+        "tmr": 80.81,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 14.08
+    },
+    "04/2025": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 95.99,
+        "outlier_12h": 0.01,
+        "tmr": 82.4,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 15.25
+    },
+    "05/2025": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 95.87,
+        "outlier_12h": 0.03,
+        "tmr": 85.09,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 14.88
+    },
+    "06/2025": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 96.17,
+        "outlier_12h": 0.0,
+        "tmr": 87.25,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 12.89
+    },
+    "07/2025": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 96.79,
+        "outlier_12h": 0.01,
+        "tmr": 83.36,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 14.22
+    },
+    "08/2025": {
+        "nota": "A",
+        "pontos": 85,
+        "reparo_4h": 97.12,
+        "outlier_12h": 0.0,
+        "tmr": 82.56,
+        "efetividade_altas": 100.0,
+        "minima_agenda": 100.0,
+        "bd_planta": 9.37
+    }
+}
