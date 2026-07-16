@@ -33,7 +33,7 @@ async function fetchAggregatedBacklog(tableName, localTodayStr, groupByMode, poo
         AND COALESCE(NULLIF(b."STATUS_REASON", ''), b."STATUS") != 'TRIAGEM'
         AND b."CLUSTER_" IS NOT NULL
         AND b."ARMARIO" IN (SELECT "ARMARIO" FROM importador.whitelist_armarios)
-        AND b."PHYSICAL_LINK_MEDIA_TYPE" ILIKE 'GPON'
+        AND b."PHYSICAL_LINK_MEDIA_TYPE"::text ILIKE 'GPON'
         ${dateWhere}
     ),
     categorias AS (
@@ -374,7 +374,7 @@ const getBacklogDetails = async (req, res) => {
       WHERE b."STATUS" IN ('PENDENTE', 'AGENDADA', 'EXECUCAO')
         AND COALESCE(NULLIF(b."STATUS_REASON", ''), b."STATUS") != 'TRIAGEM'
         AND b."ARMARIO" IN (SELECT "ARMARIO" FROM importador.whitelist_armarios)
-        AND b."PHYSICAL_LINK_MEDIA_TYPE" ILIKE 'GPON'
+        AND b."PHYSICAL_LINK_MEDIA_TYPE"::text ILIKE 'GPON'
         ${dateWhere}
         ${filterConditions}
         ${agingCondition}
