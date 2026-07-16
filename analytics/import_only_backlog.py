@@ -23,7 +23,8 @@ folder_path = 'c:/Users/TECNOMULTI/sistema-qualidade/dados/1_uploads_brutos/'
 # Encontrar o arquivo BackLogDiario mais recente
 import glob
 import os
-list_of_files = glob.glob(os.path.join(folder_path, 'BackLogDiario*.csv'))
+folder_downloads = 'c:/Users/TECNOMULTI/Downloads/'
+list_of_files = glob.glob(os.path.join(folder_path, 'BackLogDiario*.csv')) + glob.glob(os.path.join(folder_downloads, 'BackLogDiario*.csv'))
 if not list_of_files:
     print("Nenhum arquivo BackLogDiario*.csv encontrado!")
     exit(1)

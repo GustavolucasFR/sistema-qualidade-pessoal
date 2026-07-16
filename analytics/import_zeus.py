@@ -43,9 +43,12 @@ print("="*60)
 from sqlalchemy.types import Text
 
 # Encontrar os arquivos Zeus
+folder_downloads = 'c:/Users/TECNOMULTI/Downloads/'
 list_of_files = []
 list_of_files.extend(glob.glob(os.path.join(folder_path, '*Zeus*.xlsx')))
 list_of_files.extend(glob.glob(os.path.join(folder_path, '*Zeus*.xlsb')))
+list_of_files.extend(glob.glob(os.path.join(folder_downloads, '*Zeus*.xlsx')))
+list_of_files.extend(glob.glob(os.path.join(folder_downloads, '*Zeus*.xlsb')))
 
 if not list_of_files:
     print("Nenhum arquivo do Zeus encontrado!")
