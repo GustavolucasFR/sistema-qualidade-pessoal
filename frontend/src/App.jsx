@@ -11,10 +11,11 @@ import DashboardBacklog from './components/DashboardBacklog';
 import DashboardContrato from './components/DashboardContrato';
 import DashboardArmarios from './components/DashboardArmarios';
 import DashboardTI from './components/DashboardTI';
+import AssistenteIA from './components/AssistenteIA';
 
 import Login from './components/Login';
 import ChangePassword from './components/ChangePassword';
-import { LogOut, User, ChevronDown, Moon, Sun, Presentation, Map, Target, Layers, Menu, X, RefreshCw, Settings } from 'lucide-react';
+import { LogOut, User, ChevronDown, Moon, Sun, Presentation, Map, Target, Layers, Menu, X, RefreshCw, Settings, Bot } from 'lucide-react';
 import { useReactToPrint } from 'react-to-print';
 import { RefreshContext } from './context/RefreshContext';
 import { useContext } from 'react';
@@ -161,6 +162,8 @@ function App() {
         return <DashboardArmarios isDark={isDark} />;
       case 'ti':
         return <DashboardTI isDark={isDark} />;
+      case 'assistente_ia':
+        return <AssistenteIA />;
       default:
         return null;
     }
@@ -203,6 +206,15 @@ function App() {
             <Clock size={20} className="shrink-0" />
             <span className="font-medium whitespace-nowrap">Auditoria de SLAs</span>
           </button>
+
+          {/* <button
+            onClick={() => setActiveTab('assistente_ia')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${activeTab === 'assistente_ia' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
+            title="Assistente de IA"
+          >
+            <Bot size={20} className="shrink-0 text-indigo-300" />
+            <span className="font-medium whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 to-purple-300">Assistente IA</span>
+          </button> */}
           
           {user.role !== 'TECNICO' && (
             <button
@@ -374,6 +386,7 @@ function App() {
                <option value="slas">Auditoria SLAs</option>
                <option value="acoes">Gestão de Qualidade</option>
                <option value="produtividade_central">Central de Produtividade</option>
+               {/* <option value="assistente_ia">Assistente IA</option> */}
                <option value="backlog">Backlog Diário</option>
                <option value="armarios">Armários Ofensores</option>
 

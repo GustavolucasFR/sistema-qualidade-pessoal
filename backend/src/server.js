@@ -16,6 +16,7 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const authRoutes = require('./routes/authRoutes');
 const produtividadeKpiRoutes = require('./routes/produtividadeKpiRoutes');
 const dreRoutes = require('./routes/dreRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 // Middleware
 const { verifyToken } = require('./middlewares/authMiddleware');
@@ -31,6 +32,7 @@ app.use('/api/remuneracao', remuneracaoRoutes);
 app.use('/api', dashboardRoutes); // Monta as rotas antigas na mesma base (/api/penalizacoes, etc)
 app.use('/api/kpis', produtividadeKpiRoutes);
 app.use('/api/dre', dreRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Rotas protegidas legadas (que ainda estao no server.js)
 const pool = require('./config/db');
