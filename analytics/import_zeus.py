@@ -91,12 +91,27 @@ if not all_dfs:
 print("Concatenando todos os meses...")
 final_df = pd.concat(all_dfs, ignore_index=True)
 
+print("Removendo colunas 100% vazias...")
+# Substitui strings vazias e variações de null por NaN
+final_df.replace(['', 'nan', 'None', 'null', 'NaN', '<NA>'], pd.NA, inplace=True)
+# Remove colunas onde todos os valores são NaN
+final_df.dropna(axis=1, how='all', inplace=True)
+
 from sqlalchemy import text
 
 print("Inserindo no banco de dados...")
 dtypes = {c: Text() for c in final_df.columns}
 with engine.begin() as conn:
+    # Check existing columns and add missing ones
+    res = conn.execute(text("SELECT column_name FROM information_schema.columns WHERE table_schema = 'importador' AND table_name = 'zeus_consolidado'"))
+    existing_cols = set([row[0] for row in res])
+    new_cols = [c for c in final_df.columns if c not in existing_cols]
+    for c in new_cols:
+        print(f"  [+] Adicionando nova coluna encontrada: {c}")
+        conn.execute(text(f'ALTER TABLE importador.zeus_consolidado ADD COLUMN "{c}" TEXT'))
+        
     conn.execute(text("TRUNCATE TABLE importador.zeus_consolidado"))
+
 final_df.to_sql('zeus_consolidado', engine, schema='importador', if_exists='append', index=False, dtype=dtypes)
 print("Insercao finalizada.")
 

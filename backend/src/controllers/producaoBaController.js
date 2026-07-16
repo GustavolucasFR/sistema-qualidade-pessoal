@@ -62,7 +62,8 @@ exports.getProducaoBa = async (req, res) => {
       remaining_working_days AS (
           SELECT 
               cluster_oficial,
-              COUNT(CASE WHEN d > (SELECT d_max FROM cycle_dates) THEN 1 END) as r_days 
+              COUNT(CASE WHEN d > (SELECT d_max FROM cycle_dates) THEN 1 END) as r_days,
+              COUNT(d) as total_days
           FROM working_days
           GROUP BY cluster_oficial
       ),
@@ -88,6 +89,7 @@ exports.getProducaoBa = async (req, res) => {
           SUM(pd.is_instalacao) as instalacao,
           SUM(pd.is_mudanca) as mudanca,
           COALESCE(MAX(rwd.r_days), 0) as dias_restantes,
+          COALESCE(MAX(rwd.total_days), 0) as dias_uteis_total,
           (SUM(CASE WHEN l6.d IS NOT NULL THEN pd.is_produtivo ELSE 0 END) / 6.0) as media_6d_vol,
           (SUM(CASE WHEN l6.d IS NOT NULL THEN pd.producao_rs ELSE 0 END) / 6.0) as media_6d_rs
       FROM importador.fatos_dashboard pd
@@ -252,6 +254,7 @@ exports.getProducaoBa = async (req, res) => {
       gC.instalacao += parseFloat(row.instalacao) || 0;
       gC.mudanca += parseFloat(row.mudanca) || 0;
       gC.meta_orcada = 0;
+      gC.dias_uteis_total = Math.max(gC.dias_uteis_total || 0, parseFloat(row.dias_uteis_total) || 0);
 
       const media_6d_rs = parseFloat(row.media_6d_rs) || 0;
       const dias_restantes = parseFloat(row.dias_restantes) || 0;
@@ -265,6 +268,7 @@ exports.getProducaoBa = async (req, res) => {
       gCd.receita_fibrasil += parseFloat(row.receita_fibrasil) || 0;
       gCd.instalacao += parseFloat(row.instalacao) || 0;
       gCd.mudanca += parseFloat(row.mudanca) || 0;
+      gCd.dias_uteis_total = Math.max(gCd.dias_uteis_total || 0, parseFloat(row.dias_uteis_total) || 0);
       gCd.projecao_producao += parseFloat(row.producao_rs) + (media_6d_rs * dias_restantes);
 
       let meta_cidade = 0;
@@ -304,14 +308,18 @@ exports.getProducaoBa = async (req, res) => {
     Object.values(groupedDataCidade).forEach(g => { g.gap_producao_meta = g.producao_rs - g.meta_orcada; });
 
     let dias_restantes_global = 0;
-    if (rows.length > 0) dias_restantes_global = parseFloat(rows[0].dias_restantes) || 0;
+    let dias_uteis_total_global = 0;
+    if (rows.length > 0) {
+        dias_restantes_global = parseFloat(rows[0].dias_restantes) || 0;
+        dias_uteis_total_global = parseFloat(rows[0].dias_uteis_total) || 0;
+    }
 
     const mapRow = row => {
       row.faturamento_hc = row.hc_produtivos > 0 ? row.producao_rs / row.hc_produtivos : 0;
       row.ticket_medio = row.producao_vol > 0 ? row.producao_rs / row.producao_vol : 0;
       let falta_rs = row.meta_orcada - row.producao_rs;
       if (falta_rs < 0) falta_rs = 0;
-      row.meta_diaria_rs = (dias_restantes_global > 0) ? falta_rs / dias_restantes_global : 0;
+      row.meta_diaria_rs = (row.dias_uteis_total > 0) ? row.meta_orcada / row.dias_uteis_total : 0;
       row.meta_diaria_atividades = row.ticket_medio > 0 ? row.meta_diaria_rs / row.ticket_medio : 0;
       return row;
     };
@@ -341,7 +349,7 @@ exports.getProducaoBa = async (req, res) => {
     totais.ticket_medio = totais.producao_vol > 0 ? totais.producao_rs / totais.producao_vol : 0;
     let total_falta_rs = totais.meta_orcada - totais.producao_rs;
     if (total_falta_rs < 0) total_falta_rs = 0;
-    totais.meta_diaria_rs = (dias_restantes_global > 0) ? total_falta_rs / dias_restantes_global : 0;
+    totais.meta_diaria_rs = (dias_uteis_total_global > 0) ? totais.meta_orcada / dias_uteis_total_global : 0;
     totais.meta_diaria_atividades = totais.ticket_medio > 0 ? totais.meta_diaria_rs / totais.ticket_medio : 0;
 
     let cicloData = null;

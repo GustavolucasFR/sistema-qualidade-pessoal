@@ -394,3 +394,11 @@ except Exception as e:
     print(f"Erro na etapa final da importação: {e}")
 
 print("\nProcesso de importação concluído!")
+
+print("\nLimpando arquivos processados da pasta...")
+for f in files:
+    try:
+        os.remove(f)
+        print(f"  - Arquivo apagado com sucesso: {os.path.basename(f)}")
+    except Exception as e:
+        print(f"  - Aviso: Nao foi possivel apagar o arquivo {os.path.basename(f)} (Pode estar aberto no Excel)")

@@ -6,6 +6,7 @@ import glob
 
 WATCH_DIR = r"C:\Users\TECNOMULTI\sistema-qualidade\dados\1_uploads_brutos"
 CONSOLIDADO_DIR = r"C:\Users\TECNOMULTI\sistema-qualidade\dados\2_dados_consolidados"
+DOWNLOADS_DIR = r"C:\Users\TECNOMULTI\Downloads"
 SCRIPT_BACKLOG = r"C:\Users\TECNOMULTI\sistema-qualidade\analytics\import_only_backlog.py"
 SCRIPT_ZEUS = r"C:\Users\TECNOMULTI\sistema-qualidade\analytics\import_zeus.py"
 SCRIPT_ZEUS_MOTOR = r"C:\Users\TECNOMULTI\sistema-qualidade\analytics\motor_zeus_produtividade.py"
