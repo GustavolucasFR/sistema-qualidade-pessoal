@@ -78,24 +78,24 @@ const query = `
         LEFT JOIN importador.macro_atividades ma ON UPPER(TRIM(pd.tipo_de_atividade)) = UPPER(TRIM(ma.atividade_zeus))
         
         LEFT JOIN importador.regras_receita_extra re ON UPPER(TRIM(re.chave)) = UPPER(
-            TRIM(pd.tipo_de_atividade) || TRIM(pd.estado) || TRIM(pd.tecnologia) || 
+            TRIM(pd.tipo_de_atividade) || TRIM(pd.estado) || COALESCE(TRIM(pd.tecnologia), 'GPON') || 
             CASE WHEN UPPER(pd.cidade) IN ('CABEDELO', 'GARANHUNS', 'MOSSORO', 'PARNAMIRIM', 'PATOS') THEN 'FiBrasil' ELSE 'Vivo' END || 
             CASE 
-                WHEN LOWER(TRIM(pd.realizou_reaproveitamento_do_drop_)) = 'não' THEN 'Não'
-                WHEN LOWER(TRIM(pd.realizou_reaproveitamento_do_drop_)) IN ('sim', 'sim parcialmente', 'sim - parcial') THEN 'Sim'
+                WHEN LOWER(TRIM(pd.realizou_reaproveitamento_do_drop_)) IN ('não', 'nao') THEN 'Não'
+                WHEN LOWER(TRIM(pd.realizou_reaproveitamento_do_drop_)) IN ('sim', 'sim parcialmente', 'sim - parcial', 'sim - total') THEN 'Sim'
                 ELSE '-'
             END ||
             CASE 
-                WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) = 'não' THEN 'Não' 
+                WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) IN ('não', 'nao') THEN 'Não' 
                 WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) = 'sim' THEN 'Sim' 
                 ELSE '-' 
             END
         )
         LEFT JOIN importador.regras_receita r ON UPPER(TRIM(r.chave)) = UPPER(
-            TRIM(pd.tipo_de_atividade) || TRIM(pd.estado) || TRIM(pd.tecnologia) || 
+            TRIM(pd.tipo_de_atividade) || TRIM(pd.estado) || COALESCE(TRIM(pd.tecnologia), 'GPON') || 
             CASE WHEN UPPER(pd.cidade) IN ('CABEDELO', 'GARANHUNS', 'MOSSORO', 'PARNAMIRIM', 'PATOS') THEN 'FiBrasil' ELSE 'Vivo' END || 
             CASE 
-                WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) = 'não' THEN 'Não' 
+                WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) IN ('não', 'nao') THEN 'Não' 
                 WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) = 'sim' THEN 'Sim' 
                 ELSE '-' 
             END

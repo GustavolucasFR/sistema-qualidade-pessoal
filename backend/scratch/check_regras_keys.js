@@ -1,17 +1,12 @@
 const { Client } = require('pg');
-
 const client = new Client('postgresql://postgres:postgres@localhost:5432/postgres');
-
 client.connect().then(async () => {
     try {
-        const r = await client.query(`
-            SELECT chave, receita_vivo, receita_fibrasil
-            FROM importador.regras_receita_extra
-            LIMIT 5
-        `);
-        console.table(r.rows);
-    } catch (e) {
-        console.error(e.message);
-    }
+        const query = `
+        SELECT chave FROM importador.regras_receita LIMIT 10;
+        `;
+        const r1 = await client.query(query);
+        console.table(r1.rows);
+    } catch (e) { console.error(e); }
     client.end();
 });

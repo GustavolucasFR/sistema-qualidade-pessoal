@@ -25,10 +25,10 @@ export const RefreshProvider = ({ children }) => {
   useEffect(() => {
     if (!autoRefresh) return;
     
-    // Auto atualiza a cada 5 minutos
+    // Auto atualiza a cada 20 segundos
     const interval = setInterval(() => {
       setTick(t => t + 1);
-    }, 5 * 60 * 1000);
+    }, 20 * 1000);
 
     return () => clearInterval(interval);
   }, [autoRefresh]);

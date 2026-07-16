@@ -275,7 +275,7 @@ for file_path in files:
                     df_macro = df_macro[df_macro['atividade_zeus'].str.strip() != '']
                     
                     with engine.connect() as con:
-                        con.execute(text("DROP TABLE IF EXISTS importador.macro_atividades;"))
+                        con.execute(text("DROP TABLE IF EXISTS importador.macro_atividades CASCADE;"))
                         con.execute(text("CREATE TABLE importador.macro_atividades (atividade_zeus text, macro_atividade text);"))
                         con.commit()
                     df_macro.to_sql('macro_atividades', engine, schema='importador', if_exists='append', index=False)
@@ -308,6 +308,18 @@ try:
         """))
         con.commit()
         
+        print("Preenchendo empresas vazias...")
+        con.execute(text("""
+            UPDATE importador.zeus_consolidado z1
+            SET empresa = COALESCE(
+                (SELECT b.empresa FROM importador.tecnicos b WHERE b.mat_vivo::text = z1.login_tecnico LIMIT 1),
+                (SELECT 'TECNOMULTI' FROM importador.whitelist_armarios a WHERE UPPER(TRIM(a."ARMARIO")) = UPPER(TRIM(z1.id_de_arm_rio)) LIMIT 1),
+                (SELECT MAX(empresa) FROM importador.zeus_consolidado z2 WHERE z2.login_tecnico = z1.login_tecnico AND z2.empresa IS NOT NULL AND z2.empresa != 'nan' AND z2.empresa != '')
+            )
+            WHERE (z1.empresa IS NULL OR z1.empresa = 'nan' OR z1.empresa = '');
+        """))
+        con.commit()
+        
         print("Criando View importador.producao_ba_detalhado dinamicamente...")
         # Drop old views if they exist to recreate them with new columns
         try:
@@ -337,26 +349,24 @@ try:
             data_agendada_para_execu__o::timestamp as data
         FROM importador.zeus_consolidado pd
         LEFT JOIN importador.regras_receita_extra re ON UPPER(TRIM(re.chave)) = UPPER(
-            TRIM(pd.tipo_de_atividade) || TRIM(pd.estado) || TRIM(pd.tecnologia) || 
+            TRIM(pd.tipo_de_atividade) || TRIM(pd.estado) || COALESCE(TRIM(pd.tecnologia), 'GPON') || 
             CASE WHEN UPPER(pd.cidade) IN ('CABEDELO', 'GARANHUNS', 'MOSSORO', 'PARNAMIRIM', 'PATOS') THEN 'FiBrasil' ELSE 'Vivo' END || 
             CASE 
-              WHEN LOWER(TRIM(pd.realizou_reaproveitamento_do_drop_)) = 'não' THEN 'Não'
-              WHEN LOWER(TRIM(pd.realizou_reaproveitamento_do_drop_)) = 'sim' THEN 'Sim'
-              WHEN LOWER(TRIM(pd.realizou_reaproveitamento_do_drop_)) = 'sim parcialmente' THEN 'Sim'
-              WHEN LOWER(TRIM(pd.realizou_reaproveitamento_do_drop_)) = 'sim - parcial' THEN 'Sim'
+              WHEN LOWER(TRIM(pd.realizou_reaproveitamento_do_drop_)) IN ('não', 'nao') THEN 'Não'
+              WHEN LOWER(TRIM(pd.realizou_reaproveitamento_do_drop_)) IN ('sim', 'sim parcialmente', 'sim - parcial', 'sim - total') THEN 'Sim'
               ELSE '-'
             END ||
             CASE 
-              WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) = 'não' THEN 'Não' 
+              WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) IN ('não', 'nao') THEN 'Não' 
               WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) = 'sim' THEN 'Sim' 
               ELSE '-' 
             END
         )
         LEFT JOIN importador.regras_receita r ON UPPER(TRIM(r.chave)) = UPPER(
-            TRIM(pd.tipo_de_atividade) || TRIM(pd.estado) || TRIM(pd.tecnologia) || 
+            TRIM(pd.tipo_de_atividade) || TRIM(pd.estado) || COALESCE(TRIM(pd.tecnologia), 'GPON') || 
             CASE WHEN UPPER(pd.cidade) IN ('CABEDELO', 'GARANHUNS', 'MOSSORO', 'PARNAMIRIM', 'PATOS') THEN 'FiBrasil' ELSE 'Vivo' END || 
             CASE 
-              WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) = 'não' THEN 'Não' 
+              WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) IN ('não', 'nao') THEN 'Não' 
               WHEN LOWER(TRIM(pd.projeto_matrix__fibra_dedicada_)) = 'sim' THEN 'Sim' 
               ELSE '-' 
             END

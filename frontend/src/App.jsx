@@ -308,7 +308,7 @@ function App() {
             <button
               onClick={() => setAutoRefresh(!autoRefresh)}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-full font-medium transition-all text-sm border ${autoRefresh ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 border-emerald-200 dark:border-emerald-800' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 border-transparent'}`}
-              title="Auto-Atualizar (5 min)"
+              title="Auto-Atualizar (20 seg)"
             >
               <RefreshCw size={16} className={autoRefresh ? "animate-[spin_4s_linear_infinite]" : ""} />
               <span className="hidden lg:inline">{autoRefresh ? 'TV ON' : 'TV OFF'}</span>
