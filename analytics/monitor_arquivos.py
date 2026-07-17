@@ -75,6 +75,10 @@ def main():
                             subprocess.run([sys.executable, SCRIPT_ZEUS_MOTOR], check=True)
                             print(f"[{time.strftime('%H:%M:%S')}] ✅ Cálculos do Motor Zeus finalizados!")
                             
+                            print(f"[{time.strftime('%H:%M:%S')}] Atualizando Motor Central do Dashboard (fatos_dashboard)...")
+                            subprocess.run(['node', 'test_motor.js'], cwd=r'C:\Users\TECNOMULTI\sistema-qualidade\backend', check=True)
+                            print(f"[{time.strftime('%H:%M:%S')}] ✅ Motor Central atualizado com sucesso!")
+                            
                     except subprocess.CalledProcessError:
                         print(f"[{time.strftime('%H:%M:%S')}] ❌ Erro durante a importação do arquivo.")
                 
