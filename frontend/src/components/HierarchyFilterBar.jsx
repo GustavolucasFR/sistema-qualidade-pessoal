@@ -33,12 +33,12 @@ const HierarchyFilterBar = ({
 
   return (
     <div className="flex flex-wrap items-center gap-4 py-2">
-      {/* GERÊNCIA */}
+      {/* GERÊNCIA / GESTOR RESPONSÁVEL */}
       <div className="flex flex-col gap-1">
         <label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-          GERÊNCIA
+          GERÊNCIA / GESTOR RESPONSÁVEL
         </label>
-        <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700/60 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 min-w-[200px]">
+        <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700/60 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 min-w-[210px]">
           <Shield size={16} className="text-slate-400" />
           <select 
             value={gerenciaFilter} 
@@ -58,7 +58,7 @@ const HierarchyFilterBar = ({
         <label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
           COORDENADOR JR
         </label>
-        <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700/60 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 min-w-[220px]">
+        <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700/60 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 min-w-[210px]">
           <UserCheck size={16} className="text-slate-400" />
           <select 
             value={coordenadorFilter} 
@@ -73,12 +73,12 @@ const HierarchyFilterBar = ({
         </div>
       </div>
 
-      {/* GESTOR RESPONSÁVEL */}
+      {/* COORDENADOR | GS */}
       <div className="flex flex-col gap-1">
         <label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-          GESTOR RESPONSÁVEL
+          COORDENADOR | GS
         </label>
-        <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700/60 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 min-w-[220px]">
+        <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700/60 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 min-w-[210px]">
           <Users size={16} className="text-slate-400" />
           <select 
             value={gestorFilter} 
