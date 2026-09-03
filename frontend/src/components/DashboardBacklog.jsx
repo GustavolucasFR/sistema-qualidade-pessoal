@@ -111,7 +111,7 @@ const DashboardBacklog = ({ isDark }) => {
   const formatarDataLocal = (dataString) => {
     if (!dataString) return '';
     try {
-      const parts = dataString.split(/[\s/:-T]/);
+      const parts = dataString.split(/[\s/:\-T]/);
       if (parts.length >= 3) {
         if (parts[0].length === 4) {
           return `${parts[2]}/${parts[1]}/${parts[0]} às ${parts[3] || '00'}:${parts[4] || '00'}`;

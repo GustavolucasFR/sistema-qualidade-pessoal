@@ -91,6 +91,21 @@ app.get('/api/operacional/jun', async (req, res) => {
 
 // As restantes rotas antigas podem ser movidas gradualmente, o mais importante foi limpar o server.js das maiores e proteger todas.
 
+// Agendador do Scraper de Backlog (Roda a cada 1 hora e 10 minutos = 70 minutos = 4200000 ms)
+const { exec } = require('child_process');
+const scraperInterval = 70 * 60 * 1000;
+setInterval(() => {
+    console.log(`[Scheduler] Iniciando extração automática do ELOS Backlog...`);
+    const scraperPath = path.join(__dirname, '../scraper_elos_backlog.js');
+    exec(`node "${scraperPath}"`, { cwd: path.join(__dirname, '..') }, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`[Scheduler] Erro no scraper ELOS:`, error.message);
+            return;
+        }
+        console.log(`[Scheduler] Scraper ELOS executado com sucesso e banco atualizado!`);
+    });
+}, scraperInterval);
+
 app.listen(PORT, () => {
     console.log(`🚀 API do Sistema de Qualidade rodando na porta ${PORT} (Protegida com JWT)`);
     console.log(`📡 Rota de Login: http://localhost:${PORT}/api/auth/login`);
