@@ -3,12 +3,16 @@ import { formatarMesAno } from '../utils/dateFormatter';
 import { Clock, TrendingUp, AlertTriangle, Activity } from 'lucide-react';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell } from 'recharts';
 import ExportButtons from './ExportButtons';
+import HierarchyFilterBar from './HierarchyFilterBar';
 
 const DashboardTMA = () => {
   const [dados, setDados] = useState({ por_cluster: [], por_dia: [] });
   const [loading, setLoading] = useState(true);
   const [mesSelecionado, setMesSelecionado] = useState('Todos');
   const [mesesDisponiveis, setMesesDisponiveis] = useState([]);
+  const [gerenciaFilter, setGerenciaFilter] = useState('Todas');
+  const [coordenadorFilter, setCoordenadorFilter] = useState('Todas');
+  const [gestorFilter, setGestorFilter] = useState('Todos');
 
   useEffect(() => {
     const fetchMeses = async () => {
@@ -32,7 +36,7 @@ const DashboardTMA = () => {
     const fetchDados = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`http://${window.location.hostname}:3001/api/kpis/tma?mes=${mesSelecionado}`, {
+        const res = await fetch(`http://${window.location.hostname}:3001/api/kpis/tma?mes=${mesSelecionado}&gerencia=${gerenciaFilter}&coordenador_jr=${coordenadorFilter}&gestor=${gestorFilter}`, {
           headers: { 'Authorization': token ? `Bearer ${token}` : '' }
         });
         const json = await res.json();
@@ -44,10 +48,15 @@ const DashboardTMA = () => {
       }
     };
     fetchDados();
-  }, [mesSelecionado]);
+  }, [mesSelecionado, gerenciaFilter, coordenadorFilter, gestorFilter]);
 
   return (
     <div className="space-y-8 p-4">
+      <HierarchyFilterBar 
+        gerenciaFilter={gerenciaFilter} setGerenciaFilter={setGerenciaFilter}
+        coordenadorFilter={coordenadorFilter} setCoordenadorFilter={setCoordenadorFilter}
+        gestorFilter={gestorFilter} setGestorFilter={setGestorFilter}
+      />
       <div className="bg-gradient-to-r from-blue-600 to-indigo-500 rounded-2xl p-6 text-white shadow-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="flex items-center gap-4">
           <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">

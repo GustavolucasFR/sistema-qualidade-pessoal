@@ -1052,7 +1052,28 @@ const getHeatmapDados = async (req, res) => {
     }
 };
 
+
+const getFiltrosHierarquia = async (req, res) => {
+    try {
+        const gerencias = await pool.query("SELECT DISTINCT gerencia FROM importador.base_de_tecnicos WHERE gerencia IS NOT NULL AND TRIM(gerencia) != '' ORDER BY gerencia");
+        const coordJr = await pool.query("SELECT DISTINCT coordenador_jr FROM importador.base_de_tecnicos WHERE coordenador_jr IS NOT NULL AND TRIM(coordenador_jr) != '' ORDER BY coordenador_jr");
+        const gestores = await pool.query("SELECT DISTINCT gestor FROM importador.base_de_tecnicos WHERE gestor IS NOT NULL AND TRIM(gestor) != '' ORDER BY gestor");
+        const clusters = await pool.query("SELECT DISTINCT cluster FROM importador.base_de_tecnicos WHERE cluster IS NOT NULL AND TRIM(cluster) != '' ORDER BY cluster");
+
+        res.json({
+            gerencias: gerencias.rows.map(r => r.gerencia),
+            coordenadores: coordJr.rows.map(r => r.coordenador_jr),
+            gestores: gestores.rows.map(r => r.gestor),
+            clusters: clusters.rows.map(r => r.cluster)
+        });
+    } catch (err) {
+        console.error('Erro em getFiltrosHierarquia:', err);
+        res.status(500).json({ erro: 'Falha ao buscar filtros de hierarquia.' });
+    }
+};
+
 module.exports = {
+    getFiltrosHierarquia,
     getSimuladorContrato,
     getPenalizacoes,
     getFinanceiro,

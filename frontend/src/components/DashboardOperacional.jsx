@@ -6,6 +6,7 @@ import { AlertTriangle, Clock, Users, ShieldAlert, ArrowDownToLine, Search, Refr
 import { usePersistentState } from '../hooks/usePersistentState';
 import { RefreshContext } from '../context/RefreshContext';
 import ExportButtons from './ExportButtons';
+import HierarchyFilterBar from './HierarchyFilterBar';
 
 export default function DashboardOperacional({ userRole, isDark }) {
   const [busca, setBusca] = useState('');
@@ -14,6 +15,9 @@ export default function DashboardOperacional({ userRole, isDark }) {
   const [mesSelecionadoFin, setMesSelecionadoFin] = usePersistentState('oper_mesFin', 'Todos');
   const [estadoSelecionado, setEstadoSelecionado] = usePersistentState('oper_estado', 'Todos');
   const [cidadeSelecionada, setCidadeSelecionada] = usePersistentState('oper_cidade', 'Todas');
+  const [gerenciaFilter, setGerenciaFilter] = usePersistentState('oper_gerencia', 'Todas');
+  const [coordenadorFilter, setCoordenadorFilter] = usePersistentState('oper_coordenador', 'Todas');
+  const [gestorFilter, setGestorFilter] = usePersistentState('oper_gestor', 'Todos');
   const { tick } = useContext(RefreshContext);
 
   const [dadosOperacionais, setDadosOperacionais] = useState([]);
@@ -314,6 +318,13 @@ export default function DashboardOperacional({ userRole, isDark }) {
   };
 
   return (
+    <div className="mb-4 px-4 pt-2">
+      <HierarchyFilterBar 
+        gerenciaFilter={gerenciaFilter} setGerenciaFilter={setGerenciaFilter}
+        coordenadorFilter={coordenadorFilter} setCoordenadorFilter={setCoordenadorFilter}
+        gestorFilter={gestorFilter} setGestorFilter={setGestorFilter}
+      />
+    </div>
     <div>
       <div ref={printRef} className="min-h-screen bg-transparent p-6 font-sans text-slate-800 dark:text-slate-200 transition-colors duration-300">
 

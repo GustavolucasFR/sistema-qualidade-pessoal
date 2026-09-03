@@ -4,6 +4,7 @@ import { Briefcase, User, MapPin, CalendarDays, TrendingUp, CheckCircle, Activit
 import { usePersistentState } from '../hooks/usePersistentState';
 import { RefreshContext } from '../context/RefreshContext';
 import ExportButtons from './ExportButtons';
+import HierarchyFilterBar from './HierarchyFilterBar';
 
 const DashboardProdutividade = ({ userRole, isDark }) => {
   const [data, setData] = useState([]);
@@ -11,6 +12,9 @@ const DashboardProdutividade = ({ userRole, isDark }) => {
   const [agrupamento, setAgrupamento] = usePersistentState('prod_agrupamento', 'tecnico'); // tecnico, cidade, cluster
   const [periodo, setPeriodo] = usePersistentState('prod_periodo', 'mensal'); // diaria, semanal, mensal
   const [clusterFilter, setClusterFilter] = usePersistentState('prod_cluster', 'Todos');
+  const [gerenciaFilter, setGerenciaFilter] = usePersistentState('prod_gerencia', 'Todas');
+  const [coordenadorFilter, setCoordenadorFilter] = usePersistentState('prod_coordenador', 'Todas');
+  const [gestorFilter, setGestorFilter] = usePersistentState('prod_gestor', 'Todos');
   const [availableClusters, setAvailableClusters] = useState([]);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const { tick } = useContext(RefreshContext);
@@ -64,7 +68,10 @@ const DashboardProdutividade = ({ userRole, isDark }) => {
         const queryParams = new URLSearchParams({
           agrupamento,
           periodo,
-          cluster: clusterFilter
+          cluster: clusterFilter,
+          gerencia: gerenciaFilter,
+          coordenador_jr: coordenadorFilter,
+          gestor: gestorFilter
         });
         const res = await fetch(`http://${window.location.hostname}:3001/api/produtividade?${queryParams}`);
         if (res.ok) {
@@ -108,7 +115,7 @@ const DashboardProdutividade = ({ userRole, isDark }) => {
       }
     };
     fetchData();
-  }, [agrupamento, periodo, clusterFilter, refreshTrigger, tick]);
+  }, [agrupamento, periodo, clusterFilter, gerenciaFilter, coordenadorFilter, gestorFilter, refreshTrigger, tick]);
 
   if (loading && data.length === 0) {
     return (
@@ -132,6 +139,11 @@ const DashboardProdutividade = ({ userRole, isDark }) => {
       
       {/* Header and Controls */}
       <div className="bg-white dark:bg-slate-800 shadow-sm border-b border-slate-200 dark:border-slate-700 z-10 p-6">
+        <HierarchyFilterBar 
+          gerenciaFilter={gerenciaFilter} setGerenciaFilter={setGerenciaFilter}
+          coordenadorFilter={coordenadorFilter} setCoordenadorFilter={setCoordenadorFilter}
+          gestorFilter={gestorFilter} setGestorFilter={setGestorFilter}
+        />
         <div className="flex justify-between items-center mb-4">
             <div>
                 <h1 className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-3">

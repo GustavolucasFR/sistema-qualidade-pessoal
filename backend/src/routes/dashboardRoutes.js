@@ -32,6 +32,7 @@ router.get('/slas/ofensores', dashboardController.getSlasOfensores);
 router.get('/slas/falhas/:tecnico', dashboardController.getSlasFalhasTecnico);
 router.get('/tecnico/perfil/:tecnico', dashboardController.getPerfilTecnico);
 router.get('/meses', dashboardController.getMesesDisponiveis);
+router.get('/filtros-hierarquia', dashboardController.getFiltrosHierarquia);
 router.get('/clusters/resumo', dashboardController.getClustersResumo);
 router.get('/planos-acao', dashboardController.getPlanosAcao);
 router.post('/planos-acao', dashboardController.postPlanosAcao);
